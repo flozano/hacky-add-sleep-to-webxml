@@ -46,6 +46,7 @@ public class SleepFilter implements Filter {
 		if (isMatch(httpRequest)) {
 			sleep();
 		}
+		chain.doFilter(httpRequest, response);
 	}
 
 	private void sleep() {
