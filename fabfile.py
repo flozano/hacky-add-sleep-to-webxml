@@ -45,6 +45,15 @@ def remove_line_from_file(contains, file):
 def add_sleep(name, pattern, min_sleep, max_sleep, app=DEFAULT_APP, instance=DEFAULT_INSTANCE):
 	"""
 	Add a new sleep to requests with a given pattern.
+
+	Parameters:
+	-----------
+	name: name of the 'sleep' filter, for identification purposes
+	pattern: java regexp pattern that will be used to match against the requests. SHELL-ESCAPE!
+	min_sleep: the minimum amount of time to use in the Thread.sleep() before the request, in msecs
+	max_sleep: the maximum amount of time to use in the Thread.sleep() before the request, in msecs
+	app: app name. Optional.
+	instance: instance ID. Optional, defaults to 0.
 	"""
 	build_filter()
 	jar_file = upload_filter(remote_path="/opt/%s/instances/%s/lib" % (app, instance))
@@ -57,6 +66,11 @@ def add_sleep(name, pattern, min_sleep, max_sleep, app=DEFAULT_APP, instance=DEF
 def list_sleeps(app=DEFAULT_APP, instance=DEFAULT_INSTANCE):
 	"""
 	list sleep filter lines
+
+	Parameters:
+	-----------
+	app: app name. Optional.
+	instance: instance ID. Optional, defaults to 0.
 	"""
 	web_xml_file = _web_xml(app, instance)
 	sudo("grep \"%s\" \"%s\" " % ("sleep", web_xml_file ))
@@ -66,6 +80,12 @@ def list_sleeps(app=DEFAULT_APP, instance=DEFAULT_INSTANCE):
 def remove_sleep(name, pattern, min_sleep, max_sleep, app=DEFAULT_APP, instance=DEFAULT_INSTANCE):
 	"""
 	Remove an existing sleep
+
+
+	Parameters:
+	-----------
+	name, pattern, min_sleep, max_sleep, app and instance:
+	    same as used in add_sleep, or same as listed in list_sleep
 	"""
 	web_xml_file = _web_xml(app, instance)
 	prefix = _prefix(name, pattern, min_sleep, max_sleep)
